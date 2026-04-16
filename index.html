@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Forever</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Lavender petals animation */
+        .lavender-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(230, 230, 250, 0.7);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Landing page */
+        .landing-page {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .landing-page.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .landing-title {
+            font-size: 3em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeInDown 1s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            padding: 0 20px;
+        }
+
+        .landing-subtitle {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-style: italic;
+            padding: 0 20px;
+        }
+
+        .start-button {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main content */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            color: #764ba2;
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #667eea;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .message-container {
+            margin: 30px 0;
+            line-height: 2;
+            font-size: 1.15em;
+            color: #2c3e50;
+        }
+
+        .typed-text {
+            min-height: 400px;
+        }
+
+        .typed-text p {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            text-align: justify;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .highlight {
+            color: #764ba2;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .emphasis {
+            color: #e91e63;
+            font-weight: 600;
+        }
+
+        .gentle {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .heart-divider {
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+            color: #e91e63;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-left: 5px solid #764ba2;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-style: italic;
+            color: #2c3e50;
+        }
+
+        .decision-box {
+            margin-top: 50px;
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .decision-box.visible {
+            opacity: 1;
+        }
+
+        .decision-box h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .decision-box .question {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .decision-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .decision-btn {
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .pardon-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            box-shadow: 0 5px 20px rgba(56, 239, 125, 0.4);
+        }
+
+        .pardon-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(56, 239, 125, 0.6);
+        }
+
+        .not-yet-btn {
+            background: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%);
+            color: #764ba2;
+            box-shadow: 0 5px 20px rgba(238, 156, 167, 0.4);
+        }
+
+        .not-yet-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(238, 156, 167, 0.6);
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            font-size: 0.9em;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff9800;
+            animation: blink 1.5s infinite;
+        }
+
+        .status-dot.pardoned {
+            background: #4caf50;
+            animation: none;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Vanilla scent animation */
+        .vanilla-smoke {
+            position: fixed;
+            bottom: -50px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255,250,205,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rise 8s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Final message */
+        .final-message {
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .final-message.visible {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+
+        .final-message h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .final-message p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing-title {
+                font-size: 1.8em;
+                padding: 0 20px;
+            }
+
+            .landing-subtitle {
+                font-size: 1em;
+            }
+
+            .main-content {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .message-container {
+                font-size: 1em;
+            }
+
+            .decision-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .decision-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Lavender petals -->
+    <div class="lavender-container" id="lavenderContainer"></div>
+
+    <!-- Vanilla smoke effects -->
+    <div class="vanilla-smoke" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="vanilla-smoke" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="vanilla-smoke" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="vanilla-smoke" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="vanilla-smoke" style="left: 90%; animation-delay: 3s;"></div>
+
+    <!-- Landing page -->
+    <div class="landing-page" id="landingPage">
+        <h1 class="landing-title">To The Woman Who Owns My Heart</h1>
+        <p class="landing-subtitle">A letter of truth, vulnerability, and eternal love</p>
+        <button class="start-button" id="startButton">Open My Heart to You ❤️</button>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>My Beautiful, Precious Love</h1>
+            <p class="subtitle">I need you to feel every word, because each one carries a piece of my soul</p>
+        </div>
+
+        <div class="heart-divider">💜</div>
+
+        <div class="message-container">
+            <div class="typed-text" id="typedText"></div>
+        </div>
+
+        <div class="decision-box" id="decisionBox">
+            <h2>My heart waits for yours</h2>
+            <p class="question">I've laid my soul bare before you. What does your heart whisper?</p>
+            <div class="decision-buttons">
+                <button class="decision-btn pardon-btn" id="pardonBtn">I forgive you, my love 💜</button>
+                <button class="decision-btn not-yet-btn" id="notYetBtn">I need more time to heal 🤍</button>
+            </div>
+        </div>
+
+        <div class="final-message" id="finalMessage">
+            <h2>Thank you for hearing my truth</h2>
+            <p>Whether you choose to forgive me now or need time to heal, please know that my love for you is unwavering. You are worth waiting for, fighting for, and choosing every single day. Forever.</p>
+        </div>
+    </div>
+
+    <!-- Status indicator -->
+    <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Waiting for her heart's answer...</span>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="backgroundMusic" loop>
+        <source src="song12.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="voiceMessage">
+        <source src="voice.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Create lavender petals
+        const lavenderContainer = document.getElementById('lavenderContainer');
+        for (let i = 0; i < 30; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            petal.style.opacity = Math.random() * 0.5 + 0.3;
+            lavenderContainer.appendChild(petal);
+        }
+
+        // The deeply emotional message - written from a place of genuine vulnerability
+        const message = [
+            "My love, before you read another word, I need you to know something: <span class='highlight'>I see you</span>. I see the pain in your eyes, the questions in your mind, the ache in your heart. And I'm not here to diminish any of it. Your pain is valid. Your hurt is real. And it matters to me more than my own.",
+            
+            "You deserve the complete truth, not the version that makes me look better, but the raw, honest truth. Because you've always given me honesty, and you deserve nothing less in return.",
+            
+            "Four months ago, when you told me we should break apart because you didn't feel deserving of my love, <span class='emphasis'>my world stopped spinning</span>. Do you remember what you said? You said you weren't worthy of too much love. But baby, you didn't see what I saw - a woman so precious, so rare, that I would have spent my lifetime proving to you just how deserving you are.",
+            
+            "When you ended things, I didn't just lose my girlfriend. <span class='gentle'>I lost my best friend, my safe place, my person.</span> And I want to be honest about what happened next, because you deserve to understand the mind of someone who was broken, lost, and desperately trying to survive the pain of losing you.",
+            
+            "I'm not proud of what I'm about to tell you, but I need you to hear it from my heart: <span class='emphasis'>I got into that inappropriate conversation with that girl</span>. And I need to explain WHY, not to excuse it, but because understanding the 'why' might help you see my heart more clearly.",
+            
+            "I was shattered. In that moment, I wasn't thinking clearly. I was a man trying to convince himself he could feel something, anything, other than the emptiness of losing you. It was like trying to fill the Grand Canyon with a cup of water - utterly pointless, but I was too hurt to see that.",
+            
+            "That conversation - those dirty words - <span class='highlight'>they meant nothing</span>. And that's not me trying to minimize what I did. It's me telling you that in my desperate attempt to distract myself from missing you, I engaged in something that had no emotion, no meaning, no heart. It was empty words from an empty place.",
+            
+            "But here's the most important thing, my love, and I need you to really hear this: <span class='emphasis'>Even in that darkness, even when I was trying to run from my pain, my heart never stopped recognizing that you were my home</span>.",
+            
+            "Do you know what made me stop? It wasn't guilt. It wasn't fear. It was this overwhelming realization that hit me like a freight train: <span class='gentle'>I was disrespecting the most sacred thing in my life - my love for you</span>. Even though we were broken up, even though you had ended things, my heart belonged to you. It always had, and it always will.",
+            
+            "<div class='quote-box'>\"You can't fake chemistry. You can't manufacture a soul connection. You can't replace a person who feels like home with someone who's just a house.\"</div>",
+            
+            "That's when I stopped. Not because I got caught. Not because I was scared. But because <span class='highlight'>continuing would have been a betrayal of the most real thing I've ever felt</span> - my love for you.",
+            
+            "And then something beautiful happened. We both felt it, didn't we? That magnetic pull. That undeniable truth. <span class='emphasis'>We couldn't live without each other.</span> Because what we have isn't just love - it's a soul recognition. It's coming home. It's finding your person in a world of billions.",
+            
+            "When we got back together, I made a vow to myself: <span class='gentle'>I would be the man you deserve.</span> Not perfect, because I'm human and humans are beautifully flawed. But honest. Loyal. Transparent. Completely and utterly yours.",
+            
+            "These 2.5 months with you have been the truest, most authentic version of love I've ever known. Every deep conversation at 2 AM, every vulnerable moment we've shared, every time we've chosen honesty over comfort - <span class='highlight'>that's our real story</span>. That's who WE are.",
+            
+            "Now, let me address what happened yesterday. That girl messaged me again. And my love, <span class='emphasis'>the FIRST thing I did was tell you</span>. Do you understand the significance of that? I didn't hide it. I didn't delete it and pretend it never happened. I brought it to you immediately because <span class='gentle'>you deserve to know everything that touches our relationship</span>.",
+            
+            "This is who I am now. This is who I choose to be. Completely transparent. Radically honest. Unwaveringly loyal. Because you've taught me that real love doesn't survive in shadows - it thrives in the light of truth.",
+            
+            "I know you're hurt because you thought I loved you during the breakup. Baby, <span class='highlight'>you were right to think that, because I DID love you</span>. That's the truth that makes this complicated but also proves something beautiful: even in my weakness, even in my mistake, even when I was lost and confused, <span class='emphasis'>my heart never truly left yours</span>.",
+            
+            "The fact that I stopped that conversation, the fact that I came back to you, the fact that I couldn't continue anything with anyone else - <span class='gentle'>that wasn't coincidence. That was my soul refusing to accept anything less than you</span>.",
+            
+            "I want you to understand something about love, real love, the kind we share: <span class='highlight'>It doesn't mean we never stumble. It means we choose each other after we stumble. It means we're honest about our stumbles. It means we grow from our stumbles.</span>",
+            
+            "You said you're hurting because you thought I loved you during that time. <span class='emphasis'>And I need you to hold onto this truth: I did. I do. I always will.</span> That inappropriate conversation wasn't about not loving you. It was about a broken man trying to avoid feeling the depth of how much he loved you. It was avoidance, not replacement.",
+            
+            "<div class='quote-box'>\"The heart wants what it wants. Mine wanted you when we were together. It wanted you when we were apart. It wanted you when I was trying not to want you. And it will want you for every remaining beat it has to give.\"</div>",
+            
+            "My beautiful girl, you who loves the scent of vanilla because it reminds you of comfort and home - <span class='gentle'>you ARE my comfort and home</span>. You who loves lavender fields because they represent peace and beauty - <span class='gentle'>you ARE my peace and beauty</span>. You who craves deep, meaningful conversations because your soul is profound - <span class='gentle'>you ARE the depth I want to explore for the rest of my life</span>.",
+            
+            "I'm not asking you to just forget what happened during our break. I'm asking you to see the full picture: <span class='highlight'>A man who loved you, lost you, made a mistake in his pain, realized that mistake, chose you again, and has been completely devoted ever since.</span>",
+            
+            "I'm asking you to see that <span class='emphasis'>people aren't defined by their worst moments, but by what they do after them</span>. And what I've done is choose transparency, honesty, growth, and YOU. Every single day, I choose you.",
+            
+            "You are not just someone I love. <span class='gentle'>You are the reason I believe in love.</span> You are not just my girlfriend. <span class='gentle'>You are my partner, my best friend, my safe space, my growth, my peace, my passion, my forever.</span>",
+            
+            "The girl who messaged me yesterday represents nothing. She's a ghost from a painful past, and I immediately brought her message into the light with you because <span class='highlight'>shadows and secrets have no place in our love</span>.",
+            
+            "I promise you these things, and I mean them with every fiber of my being:",
+            
+            "• I will never hide anything from you, even when the truth is uncomfortable<br>• I will protect your heart like the treasure it is<br>• I will prove every day that you are safe with me<br>• I will love you with honesty, loyalty, and unwavering devotion<br>• I will be patient with your healing, because real love doesn't rush<br>• I will spend my lifetime making sure you never doubt your worth or my love",
+            
+            "You are allowed to be hurt. You are allowed to need time. You are allowed to have questions. You are allowed to be angry. <span class='emphasis'>All of your feelings are valid, and I will hold space for every single one of them.</span>",
+            
+            "But while you're processing, I need you to hold onto these truths:<br><span class='highlight'>• I love you, not as a consolation prize, but as my first choice, every time<br>• I chose you when we got back together, and I choose you every day since<br>• My mistake during our breakup doesn't erase my love; it proves that even in darkness, my heart knew where it belonged<br>• You are not second best; you are my ONLY best<br>• You deserve every ounce of love I give you and more</span>",
+            
+            "My love, you are worth fighting for. You are worth being honest for. You are worth growing for. You are worth everything.",
+            
+            "<span class='emphasis'>I don't just love you. I choose you. I honor you. I cherish you. I'm devoted to you.</span>",
+            
+            "Whether you forgive me right now, tomorrow, next week, or need more time to heal - <span class='gentle'>I'm here. I'm not going anywhere. Because you don't walk away from home. You don't abandon your forever. You don't give up on the greatest love you've ever known.</span>",
+            
+            "I see your beautiful, honest, human heart. I see the woman who feels deeply and loves purely. I see the soul that deserves to be cherished. <span class='highlight'>And I promise you, with every breath in my body, that I will spend my life being worthy of you.</span>",
+            
+            "You are my lavender field. You are my vanilla-scented peace. You are my deepest conversation. You are my most honest truth. You are my forever person.",
+            
+            "<span class='emphasis'>You are not just the love of my life. You are the life in my love.</span>",
+            
+            "I love you. Today, tomorrow, and for all my tomorrows. 💜"
+        ];
+
+        let currentParagraph = 0;
+        let currentChar = 0;
+        let typedTextElement = document.getElementById('typedText');
+
+        // Start button functionality
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('backgroundMusic').play();
+            document.getElementById('landingPage').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('mainContent').classList.add('visible');
+                startTyping();
+            }, 1000);
+        });
+
+        // Typing animation
+        function startTyping() {
+            if (currentParagraph < message.length) {
+                const p = document.createElement('p');
+                typedTextElement.appendChild(p);
+                typeCharacter(p, message[currentParagraph]);
+            } else {
+                // Show decision box when typing is complete
+                setTimeout(() => {
+                    document.getElementById('decisionBox').classList.add('visible');
+                }, 1000);
+            }
+        }
+
+        function typeCharacter(element, text) {
+            if (currentChar < text.length) {
+                // Handle HTML tags
+                if (text.charAt(currentChar) === '<') {
+                    const closingTag = text.indexOf('>', currentChar);
+                    element.innerHTML += text.substring(currentChar, closingTag + 1);
+                    currentChar = closingTag + 1;
+                } else {
+                    element.innerHTML += text.charAt(currentChar);
+                    currentChar++;
+                }
+                setTimeout(() => typeCharacter(element, text), 20);
+            } else {
+                currentChar = 0;
+                currentParagraph++;
+                setTimeout(startTyping, 600);
+            }
+        }
+
+        // Decision buttons
+        document.getElementById('pardonBtn').addEventListener('click', function() {
+            document.getElementById('voiceMessage').play();
+            document.getElementById('statusDot').classList.add('pardoned');
+            document.getElementById('statusText').textContent = 'She has forgiven me ❤️ My heart is whole again';
+            document.getElementById('decisionBox').style.display = 'none';
+            document.getElementById('finalMessage').classList.add('visible');
+            
+            // Store decision
+            localStorage.setItem('forgiveness_status', 'pardoned');
+            localStorage.setItem('forgiveness_date', new Date().toISOString());
+            
+            // Create celebration effect
+            createHearts();
+        });
+
+        document.getElementById('notYetBtn').addEventListener('click', function() {
+            document.getElementById('statusText').textContent = 'She needs time to heal - I will wait with love and patience 💜';
+            document.getElementById('finalMessage').classList.add('visible');
+            
+            // Store decision
+            localStorage.setItem('forgiveness_status', 'pending');
+            localStorage.setItem('forgiveness_date', new Date().toISOString());
+        });
+
+        // Create hearts celebration
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💜';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '100%';
+                    heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    heart.style.zIndex = '9999';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.animation = 'rise 3s ease-out forwards';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+        }
+
+        // Check previous status on load
+        window.addEventListener('load', function() {
+            const status = localStorage.getItem('forgiveness_status');
+            if (status === 'pardoned') {
+                document.getElementById('statusDot').classList.add('pardoned');
+                document.getElementById('statusText').textContent = 'She has forgiven me ❤️ My heart is whole again';
+            } else if (status === 'pending') {
+                document.getElementById('statusText').textContent = 'She needs time to heal - I will wait with love and patience 💜';
+            }
+        });
+    </script>
+</body>
+</html>
