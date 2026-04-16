@@ -485,6 +485,10 @@
             lavenderContainer.appendChild(petal);
         }
 
+        // Audio elements
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const voiceMessage = document.getElementById('voiceMessage');
+
         // The deeply emotional message - written from a place of genuine vulnerability
         const message = [
             "My love, before you read another word, I need you to know something: <span class='highlight'>I see you</span>. I see the pain in your eyes, the questions in your mind, the ache in your heart. And I'm not here to diminish any of it. Your pain is valid. Your hurt is real. And it matters to me more than my own.",
@@ -568,7 +572,7 @@
 
         // Start button functionality
         document.getElementById('startButton').addEventListener('click', function() {
-            document.getElementById('backgroundMusic').play();
+            backgroundMusic.play();
             document.getElementById('landingPage').classList.add('hidden');
             setTimeout(() => {
                 document.getElementById('mainContent').classList.add('visible');
@@ -611,7 +615,13 @@
 
         // Decision buttons
         document.getElementById('pardonBtn').addEventListener('click', function() {
-            document.getElementById('voiceMessage').play();
+            // Stop background music first
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+            
+            // Then play voice message
+            voiceMessage.play();
+            
             document.getElementById('statusDot').classList.add('pardoned');
             document.getElementById('statusText').textContent = 'She has forgiven me ❤️ My heart is whole again';
             document.getElementById('decisionBox').style.display = 'none';
